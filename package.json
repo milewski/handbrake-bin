@@ -1,0 +1,57 @@
+{
+  "name": "handbrake-bin",
+  "version": "1.0.0",
+  "description": "'HandBrake' wrapper that makes it seamlessly available as a local dependency",
+  "author": "Rafael @Milewski",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Milewski/handbrake-bin.git"
+  },
+  "main": "source/HandBrake.js",
+  "keywords": [
+    "handbrake",
+    "encode",
+    "transcode",
+    "video",
+    "mp4",
+    "m4v",
+    "avi",
+    "h.264",
+    "h.265",
+    "vp8",
+    "mp3"
+  ],
+  "files": [
+    "source",
+    "declarations"
+  ],
+  "scripts": {
+    "postinstall": "node source/Installer.js --auto-install",
+    "install:ubuntu": "source/install-ubuntu.sh",
+    "prepublish": "npm test",
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "mocha -t 100000 -u tdd"
+  },
+  "dependencies": {
+    "object-to-spawn-args": "^1.1.0",
+    "request": "^2.74.0",
+    "rimraf": "^2.5.4",
+    "unzip": "^0.1",
+    "semver": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^2.0.0",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "expect.js": "^0.3.1",
+    "fs-extra": "^2.1.2",
+    "mocha": "^3.2.0",
+    "typescript": "^2.2.2"
+  },
+  "bugs": {
+    "url": "https://github.com/Milewski/handbrake-bin/issues"
+  },
+  "homepage": "https://github.com/Milewski/handbrake-bin"
+}

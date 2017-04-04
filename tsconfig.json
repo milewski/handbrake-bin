@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationDir": "declarations",
+    "lib": [
+      "es2015",
+      "es2015.promise"
+    ],
+    "types": [
+      "node",
+      "fs-extra",
+      "mocha"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "declarations"
+  ]
+}
