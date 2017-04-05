@@ -5,16 +5,25 @@ import * as fs from "fs";
 import { HandbrakeCLIPath } from "../source/HandBrake";
 import { execFile } from "child_process";
 
-describe('HandBrake', () => {
+describe('handbrake:darwin', () => {
 
     let installer;
 
     before(() => {
-        return fs.unlinkSync(HandbrakeCLIPath)
+        try {
+            fs.unlinkSync(HandbrakeCLIPath)
+        } catch (e) {
+            // do nothing
+        }
     });
 
-    beforeEach(() => {
-        installer = new Installer()
+    beforeEach(function() {
+
+        if (process.platform === 'win32')
+            this.skip()
+
+        installer = new Installer();
+
     });
 
     it('should fail in unsupported platform', () => {
