@@ -1,6 +1,6 @@
 {
   "name": "handbrake-bin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "'HandBrake' wrapper that makes it seamlessly available as a local dependency",
   "author": "Rafael @Milewski",
   "license": "MIT",
