@@ -1,4 +1,8 @@
 language: node_js
+os:
+  - "linux"
+  - "osx"
+script: "sudo $(which npm) install && $(which npm) test"
 node_js:
   - "4"
   - "5"

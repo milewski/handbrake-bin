@@ -47,7 +47,7 @@ $ handbrake --help
 
 ## Credits
 
-All the credits goes to [https://github.com/HandBrake/HandBrake](https://github.com/HandBrake/HandBrake) and its contributors for their hard work on building this [HandBrake](https://handbrake.fr).
+All the credits goes to [https://github.com/HandBrake/HandBrake](https://github.com/HandBrake/HandBrake) and its contributors for their hard work on building [HandBrake](https://handbrake.fr).
 
 ## License 
 
