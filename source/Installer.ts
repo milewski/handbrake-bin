@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 
-import * as request from "request";
 import * as unzip from "unzip";
 import { exec } from "child_process";
 import * as util from "util";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as rimraf from "rimraf";
-import * as version from 'semver';
+import * as version from "semver";
+import * as download from "download";
+import * as Progress from "progress";
 
 import { InstallationInterface } from "./insterfaces/InstallationInterface";
+import { HandbrakeCLIPath } from "./HandBrake";
 
 export const VERSION = '1.0.3';
 const DOWNLOAD_PATH = 'https://download.handbrake.fr/releases/%s/HandBrakeCLI-%s%s';
@@ -32,13 +34,13 @@ export class Installer {
 
     private linux;
 
-    public setup(platform: string) {
+    public setup(platform: string): Promise<string> {
 
         if (platform === 'linux') {
-            return new Promise((resolve, reject) => {
-                exec('npm run install:ubuntu', (error, stdout) => {
-                    if (error) throw reject(error)
-                    resolve(stdout)
+            return new Promise(resolve => {
+                exec('npm run install:ubuntu', error => {
+                    if (error) throw error
+                    resolve(HandbrakeCLIPath)
                 })
             })
         }
@@ -47,7 +49,7 @@ export class Installer {
             throw `Unsupported Platform: ${platform}`
         }
 
-        const installation = this[ platform ];
+        const installation = this[platform];
 
         if (fs.existsSync(path.resolve(__dirname, '..', installation.copyTo))) {
 
@@ -56,13 +58,13 @@ export class Installer {
 
                     if (error) throw reject(error)
 
-                    let [ currentVersion ] = /[\d.]+/.exec(stdout);
+                    let [currentVersion] = /[\d.]+/.exec(stdout);
 
                     if (version.gte(currentVersion, VERSION)) {
                         console.log('You already have the latest HandbrakeCLI installed')
-                        resolve()
+                        resolve(HandbrakeCLIPath)
                     } else {
-                        this.install(installation).then(resolve)
+                        this.install(installation).then(() => resolve(HandbrakeCLIPath))
                     }
 
                 })
@@ -70,7 +72,7 @@ export class Installer {
 
         }
 
-        return this.install(installation)
+        return this.install(installation).then(() => HandbrakeCLIPath)
 
     }
 
@@ -82,10 +84,9 @@ export class Installer {
 
                 fs.ensureDirSync('bin')
 
-                return this.extractFile(installation)
-                    .then(() => {
-                        fs.unlinkSync(installation.archive)
-                    })
+                return this
+                    .extractFile(installation)
+                    .then(() => fs.unlinkSync(installation.archive))
 
             })
 
@@ -122,9 +123,7 @@ export class Installer {
 
             if (archive.endsWith('.dmg')) {
 
-                const cmd = `hdiutil attach ${archive}`
-
-                exec(cmd, (err, stdout) => {
+                exec(`hdiutil attach ${archive}`, (err, stdout) => {
 
                     if (err) throw err
 
@@ -132,15 +131,15 @@ export class Installer {
 
                     if (match) {
 
-                        let devicePath = match[ 1 ],
-                            mountPath = match[ 2 ]
+                        let devicePath = match[1],
+                            mountPath = match[2]
 
                         copyFrom = path.join(mountPath, copyFrom);
 
                         let source = fs.createReadStream(copyFrom),
                             destination = fs.createWriteStream(copyTo, { mode: parseInt('755', 8) })
 
-                        destination.on('close', function() {
+                        destination.on('close', () => {
                             exec(`hdiutil detach ${devicePath}`, (error, stdout) => {
                                 if (error) throw error
                                 resolve(stdout)
@@ -164,11 +163,27 @@ export class Installer {
 
         return new Promise(accept => {
 
-            const req = request(from);
-            const download = fs.createWriteStream(to);
-            download.once('close', accept)
+            /**
+             * Check if file is available locally before attempting to download it
+             */
+            let { base } = path.parse(from);
+            if (fs.existsSync(base) || fs.existsSync(to)) {
+                console.log('binary found locally, using it instead')
+                return fs.rename(base, to, accept)
+            }
 
-            req.pipe(download);
+            download(from).on('response', response => {
+
+                const bar = new Progress('[:bar] :percent :etas', {
+                    complete: '=',
+                    incomplete: '.',
+                    width: 30,
+                    total: parseInt(response.headers['content-length'], 10)
+                });
+
+                response.on('data', chunk => bar.tick(chunk.length));
+
+            }).then(data => fs.writeFile(to, data, accept))
 
         })
 
@@ -180,13 +195,15 @@ let options = {}
 
 process.argv.slice(2)
     .forEach(item => {
-        options[ item.replace('--', '') ] = true
+        options[item.replace('--', '')] = true
     })
 
-if (options[ 'auto-install' ]) {
+if (options['install']) {
     new Installer()
         .setup(process.platform)
-        .then(function() {
+        .then(() => {
             console.log(`HandbrakeCLI ${VERSION} installation complete`)
         });
+} else if (Object.keys(options).length) {
+    console.log('Invalid Arguments: ' + JSON.stringify(options))
 }
