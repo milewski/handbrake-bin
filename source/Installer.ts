@@ -126,8 +126,8 @@ export class Installer {
                 return this
                     .exec(command)
                     .then(() => HandbrakeCLIPath)
-                    .catch((e) => {
-                        console.log(this.linux, e)
+                    .catch(() => {
+                        console.log(this.linux)
                     })
             }
 
@@ -148,7 +148,7 @@ export class Installer {
 
                 })
 
-        }).catch(() => install())
+        }, () => install())
     }
 
     private install(installation: InstallationInterface) {

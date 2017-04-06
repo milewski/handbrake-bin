@@ -12,6 +12,13 @@
 
 This is a wrapper to install [HandBrake](https://handbrake.fr) as a local dependency through **npm**.
 
+## Install
+
+```bash
+$ npm install handbrake-bin --save
+```
+_Linux users may need to run with sudo_
+
 ## Usage
 ```js
 const execFile = require('child_process').execFile;
