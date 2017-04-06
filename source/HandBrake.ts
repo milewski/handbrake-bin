@@ -1,6 +1,5 @@
-import { join } from "path";
-import { Installer } from "./Installer";
-import { execSync } from "child_process";
+import { join } from 'path';
+import { Installer } from './Installer';
 
 let path: string;
 
@@ -12,7 +11,7 @@ switch (process.platform) {
         path = join(__dirname, '..', 'bin', 'HandbrakeCLI.exe')
         break
     case 'linux':
-        path = '/usr/bin/HandBrakeCLI'
+        path = 'HandBrakeCLI'
         break
 }
 
