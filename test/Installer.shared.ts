@@ -24,15 +24,17 @@ describe('handbrake:shared', () => {
 
     });
 
-    it('should have the right file permission', function () {
+    it('should have the right file permission', function(done) {
 
-        return installer.setup(process.platform)
+        installer.setup(process.platform)
             .then(cli => {
 
                 if (process.platform === 'linux')
                     this.skip()
 
-                expect(fs.statSync(cli).mode).to.be(33261)
+                fs.access(cli, fs.constants.R_OK | fs.constants.W_OK, err => {
+                    done(err)
+                });
 
             })
 
@@ -40,7 +42,7 @@ describe('handbrake:shared', () => {
 
     it('should have the right version number', done => {
         console.log(HandbrakeCLIPath)
-        execFile(HandbrakeCLIPath, ['--version'], (error, stdout) => {
+        execFile(HandbrakeCLIPath, [ '--version' ], (error, stdout) => {
             expect(new RegExp(`HandBrake ${VERSION}`).test(stdout)).to.be(true)
             done()
         })
