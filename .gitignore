@@ -3,5 +3,5 @@ bin
 .idea
 *.js
 *.map
-.dmg
-.zip
+*.dmg
+*.zip

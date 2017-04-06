@@ -32,7 +32,7 @@
     "prepublish": "npm test",
     "build": "tsc",
     "pretest": "npm run build",
-    "test": "mocha -u tdd --no-timeouts"
+    "test": "node test/test.js"
   },
   "bin": {
     "handbrake": "source/handbrake-cli.js"
@@ -50,6 +50,7 @@
     "download": "^5.0.3",
     "expect.js": "^0.3.1",
     "fs-extra": "^2.1.2",
+    "glob": "^7.1.1",
     "mocha": "^3.2.0",
     "progress": "^2.0.0",
     "typescript": "^2.2.2"

@@ -20,21 +20,30 @@ export class Installer {
 
     private win32: InstallationInterface = {
         url: util.format(DOWNLOAD_PATH, VERSION, VERSION, '-win-x86_64.zip'),
-        archive: 'win.zip',
+        archive: 'HandBrakeCLI-${VERSION}.zip',
         copyFrom: path.join('unzipped', 'HandBrakeCLI.exe'),
         copyTo: path.join('bin', 'HandbrakeCLI.exe')
     }
 
     private darwin: InstallationInterface = {
         url: util.format(DOWNLOAD_PATH, VERSION, VERSION, '.dmg'),
-        archive: 'mac.dmg',
+        archive: `HandBrakeCLI-${VERSION}.dmg`,
         copyFrom: 'HandbrakeCLI',
         copyTo: path.join('bin', 'HandbrakeCLI')
     }
 
-    private linux;
+    private platform: string;
+    private options = {
+        deleteInstallationArchive: true
+    }
+
+    constructor(options = {}) {
+        Object.assign(this.options, options)
+    }
 
     public setup(platform: string): Promise<string> {
+
+        this.platform = platform;
 
         if (platform === 'linux') {
             return new Promise(resolve => {
@@ -76,6 +85,15 @@ export class Installer {
 
     }
 
+    public deleteInstallationArchive() {
+        return new Promise((resolve, reject) => {
+            fs.unlink(this[this.platform].archive, error => {
+                if (error) reject(error)
+                resolve()
+            })
+        })
+    }
+
     private install(installation: InstallationInterface) {
 
         return this
@@ -86,7 +104,10 @@ export class Installer {
 
                 return this
                     .extractFile(installation)
-                    .then(() => fs.unlinkSync(installation.archive))
+                    .then(() => {
+                        if (this.options.deleteInstallationArchive)
+                            return this.deleteInstallationArchive()
+                    })
 
             })
 
@@ -168,7 +189,7 @@ export class Installer {
              */
             let { base } = path.parse(from);
             if (fs.existsSync(base) || fs.existsSync(to)) {
-                console.log('binary found locally, using it instead')
+                console.log('binary was found locally, using it instead')
                 return fs.rename(base, to, accept)
             }
 

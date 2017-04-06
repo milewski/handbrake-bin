@@ -1,50 +1,32 @@
 import * as expect from "expect.js";
 import { Installer, VERSION } from "../source/Installer";
-import * as path from "path";
 import * as fs from "fs";
 import { HandbrakeCLIPath } from "../source/HandBrake";
 import { execFile } from "child_process";
+import { cleanUp } from "./helpers";
 
-describe('handbrake:darwin', () => {
+describe('handbrake:shared', () => {
 
     let installer;
 
-    before(() => {
-        try {
-            fs.unlinkSync(HandbrakeCLIPath)
-        } catch (e) {
-            // do nothing
-        }
-    });
+    before(() => cleanUp());
 
-    beforeEach(function() {
-
-        if (process.platform === 'win32')
-            this.skip()
-
-        installer = new Installer();
-
+    beforeEach(() => {
+        installer = new Installer({
+            deleteInstallationArchive: false
+        });
     });
 
     it('should fail in unsupported platform', () => {
 
-        expect(installer.setup)
+        expect(installer.setup.bind(installer))
             .withArgs('AlienOS').to.throwException(/Unsupported Platform: AlienOS/);
-
-    });
-
-    it('should download file properly', () => {
-
-        return installer.setup('darwin')
-            .then(cli => {
-                expect(cli).to.be(path.resolve(__dirname, '..', 'bin/HandbrakeCLI'))
-            })
 
     });
 
     it('should have the right file permission', () => {
 
-        return installer.setup('darwin')
+        return installer.setup(process.platform)
             .then(cli => {
                 expect(fs.statSync(cli).mode).to.be(33261)
             })
