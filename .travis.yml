@@ -10,7 +10,7 @@ node_js:
   - "4"
 
 sudo: required
-dist: precise
+dist: xenial
 
 before_install:
   - sudo add-apt-repository --yes ppa:stebbins/handbrake-releases
