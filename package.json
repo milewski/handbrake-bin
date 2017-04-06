@@ -1,6 +1,6 @@
 {
   "name": "handbrake-bin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "'HandBrake' wrapper that makes it seamlessly available as a local dependency",
   "author": "Rafael @Milewski",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "declarations"
   ],
   "scripts": {
-    "postinstall": "npm run build && node source/Installer.js install",
+    "postinstall": "node source/Installer.js install",
     "install:ubuntu": "source/install-ubuntu.sh",
     "prepublish": "npm test",
     "build": "tsc",
