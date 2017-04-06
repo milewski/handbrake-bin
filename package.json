@@ -1,6 +1,6 @@
 {
   "name": "handbrake-bin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "'HandBrake' wrapper that makes it seamlessly available as a local dependency",
   "author": "Rafael @Milewski",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "mp3"
   ],
   "files": [
-    "source/**/*.js",
+    "source/*.js",
     "declarations/source/**/*.d.ts"
   ],
   "scripts": {
@@ -38,13 +38,14 @@
     "handbrake": "source/handbrake-cli.js"
   },
   "dependencies": {
-    "object-to-spawn-args": "^1.1.0",
-    "rimraf": "^2.5.4",
-    "unzip": "^0.1",
-    "semver": "^5.3.0",
-    "fs-extra": "^2.1.2",
+    "app-root-path": "^2.0.1",
     "download": "^5.0.3",
-    "progress": "^2.0.0"
+    "fs-extra": "^2.1.2",
+    "object-to-spawn-args": "^1.1.0",
+    "progress": "^2.0.0",
+    "rimraf": "^2.5.4",
+    "semver": "^5.3.0",
+    "unzip": "^0.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^2.0.0",

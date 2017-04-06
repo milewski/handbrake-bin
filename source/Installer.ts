@@ -9,6 +9,7 @@ import * as rimraf from "rimraf";
 import * as version from "semver";
 import * as download from "download";
 import * as Progress from "progress";
+import * as AppRoot from 'app-root-path';
 
 import { InstallationInterface } from "./insterfaces/InstallationInterface";
 import { HandbrakeCLIPath } from "./HandBrake";
@@ -244,10 +245,13 @@ export class Installer {
             /**
              * Check if file is available locally before attempting to download it
              */
-            let { base } = path.parse(from);
-            if (fs.existsSync(path.resolve(process.cwd(), base)) || fs.existsSync(to)) {
-                console.log('binary was found locally, using it instead')
-                return fs.rename(base, to, accept)
+            let { base } = path.parse(from),
+                archive = AppRoot.resolve(base);
+
+            if (fs.existsSync(archive) || fs.existsSync(to)) {
+                console.log('binary was found locally, using it instead');
+                let action = this.options.deleteInstallationArchive ? 'move' : 'copy';
+                return fs[ action ](archive, base, accept);
             }
 
             download(from).on('response', response => {
