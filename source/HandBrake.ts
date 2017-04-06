@@ -12,7 +12,7 @@ switch (process.platform) {
         path = join(__dirname, '..', 'bin', 'HandbrakeCLI.exe')
         break
     case 'linux':
-        path = execSync('which HandbrakeCLI', { encoding: 'utf8' })
+        path = '/usr/bin/HandBrakeCLI'
         break
 }
 
