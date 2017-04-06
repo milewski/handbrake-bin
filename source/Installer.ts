@@ -58,43 +58,55 @@ export class Installer {
 
         this.platform = platform;
 
-        if (platform === 'linux') {
-            return new Promise(resolve => {
-                exec('npm run install:ubuntu', error => {
-                    if (error) console.log(this.linux)
-                    resolve(HandbrakeCLIPath)
-                })
-            })
+        if (!platform.match(/(win32|darwin|linux)/)) {
+            throw `Unsupported Platform: ${platform}`
         }
 
-        if (!platform.match(/(win32|darwin)/)) {
-            throw `Unsupported Platform: ${platform}`
+        if (platform === 'linux') {
+            return this.installLinux();
         }
 
         const installation = this[platform];
 
         if (fs.existsSync(path.resolve(__dirname, '..', installation.copyTo))) {
 
-            return new Promise((resolve, reject) => {
-                exec(`${installation.copyTo} --version`, (error, stdout) => {
+            return this.exec(`${installation.copyTo} --version`).then(result => {
 
-                    if (error) throw reject(error)
+                if (this.checkVersion(result)) {
+                    return HandbrakeCLIPath
+                }
 
-                    let [currentVersion] = /[\d.]+/.exec(stdout);
+                return this.install(installation).then(() => HandbrakeCLIPath)
 
-                    if (version.gte(currentVersion, VERSION)) {
-                        console.log('You already have the latest HandbrakeCLI installed')
-                        resolve(HandbrakeCLIPath)
-                    } else {
-                        this.install(installation).then(() => resolve(HandbrakeCLIPath))
-                    }
-
-                })
             })
 
         }
 
         return this.install(installation).then(() => HandbrakeCLIPath)
+
+    }
+
+    private exec(command: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            exec(command, (error, stdout) => {
+                if (error) reject(error)
+                resolve(stdout)
+            })
+        })
+    }
+
+    private checkVersion(stdout: string): Boolean {
+
+        if (!stdout.length) return false;
+
+        let [currentVersion] = /[\d.]+/.exec(stdout);
+
+        if (version.gte(currentVersion, VERSION)) {
+            console.log('You already have the latest HandbrakeCLI installed')
+            return true
+        }
+
+        return false;
 
     }
 
@@ -105,6 +117,38 @@ export class Installer {
                 resolve()
             })
         })
+    }
+
+    private installLinux() {
+
+        let command = 'chmod +x source/install-ubuntu.sh && npm run install:ubuntu',
+            install = () => {
+                return this
+                    .exec(command)
+                    .then(() => HandbrakeCLIPath)
+                    .catch((e) => {
+                        console.log(this.linux, e)
+                    })
+            }
+
+        return this.exec('which HandBrakeCLI').then(result => {
+
+            if (!result.length) {
+                return install()
+            }
+
+            return this
+                .exec(`${HandbrakeCLIPath} --version`)
+                .then(result => {
+
+                    if (this.checkVersion(result))
+                        return HandbrakeCLIPath
+
+                    return install()
+
+                })
+
+        }).catch(() => install())
     }
 
     private install(installation: InstallationInterface) {
