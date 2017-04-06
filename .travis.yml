@@ -8,7 +8,8 @@ node_js:
   - "6"
   - "5"
   - "4"
-
+dist: xenial
+sudo: required
 before_install:
   - sudo add-apt-repository --yes ppa:stebbins/handbrake-releases
   - sudo apt-get update -qq
