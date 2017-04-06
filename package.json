@@ -23,8 +23,8 @@
     "mp3"
   ],
   "files": [
-    "source",
-    "declarations"
+    "source/**/*.js",
+    "declarations/source/**/*.d.ts"
   ],
   "scripts": {
     "postinstall": "node source/Installer.js install",
