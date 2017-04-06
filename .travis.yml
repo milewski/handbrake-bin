@@ -9,6 +9,8 @@ node_js:
   - "5"
   - "4"
 
+sudo: required
+
 before_install:
   - sudo add-apt-repository --yes ppa:stebbins/handbrake-releases
   - sudo apt-get update -qq
