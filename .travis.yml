@@ -13,6 +13,6 @@ sudo: required
 dist: xenial
 
 before_install:
-  - sudo add-apt-repository --yes ppa:stebbins/handbrake-releases
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq handbrake-cli
+  - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then . sudo add-apt-repository --yes ppa:stebbins/handbrake-releases; fi"
+  - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then . sudo apt-get update -qq; fi"
+  - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then . sudo apt-get install -qq handbrake-cli; fi"
