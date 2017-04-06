@@ -20,7 +20,7 @@ export class Installer {
 
     private win32: InstallationInterface = {
         url: util.format(DOWNLOAD_PATH, VERSION, VERSION, '-win-x86_64.zip'),
-        archive: 'HandBrakeCLI-${VERSION}.zip',
+        archive: `HandBrakeCLI-${VERSION}.zip`,
         copyFrom: path.join('unzipped', 'HandBrakeCLI.exe'),
         copyTo: path.join('bin', 'HandbrakeCLI.exe')
     }
