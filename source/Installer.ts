@@ -20,7 +20,7 @@ export class Installer {
 
     private win32: InstallationInterface = {
         url: util.format(DOWNLOAD_PATH, VERSION, VERSION, '-win-x86_64.zip'),
-        archive: `HandBrakeCLI-${VERSION}.zip`,
+        archive: `HandBrakeCLI-${VERSION}-win-x86_64.zip`,
         copyFrom: path.join('unzipped', 'HandBrakeCLI.exe'),
         copyTo: path.join('bin', 'HandbrakeCLI.exe')
     }
@@ -66,7 +66,7 @@ export class Installer {
             return this.installLinux();
         }
 
-        const installation = this[platform];
+        const installation = this[ platform ];
 
         if (fs.existsSync(path.resolve(__dirname, '..', installation.copyTo))) {
 
@@ -99,7 +99,7 @@ export class Installer {
 
         if (!stdout.length) return false;
 
-        let [currentVersion] = /[\d.]+/.exec(stdout);
+        let [ currentVersion ] = /[\d.]+/.exec(stdout);
 
         if (version.gte(currentVersion, VERSION)) {
             console.log('You already have the latest HandbrakeCLI installed')
@@ -112,7 +112,7 @@ export class Installer {
 
     public deleteInstallationArchive() {
         return new Promise((resolve, reject) => {
-            fs.unlink(this[this.platform].archive, error => {
+            fs.unlink(this[ this.platform ].archive, error => {
                 if (error) reject(error)
                 resolve()
             })
@@ -209,8 +209,8 @@ export class Installer {
 
                     if (match) {
 
-                        let devicePath = match[1],
-                            mountPath = match[2]
+                        let devicePath = match[ 1 ],
+                            mountPath = match[ 2 ]
 
                         copyFrom = path.join(mountPath, copyFrom);
 
@@ -245,7 +245,7 @@ export class Installer {
              * Check if file is available locally before attempting to download it
              */
             let { base } = path.parse(from);
-            if (fs.existsSync(base) || fs.existsSync(to)) {
+            if (fs.existsSync(path.resolve(process.cwd(), base)) || fs.existsSync(to)) {
                 console.log('binary was found locally, using it instead')
                 return fs.rename(base, to, accept)
             }
@@ -256,7 +256,7 @@ export class Installer {
                     complete: '=',
                     incomplete: '.',
                     width: 30,
-                    total: parseInt(response.headers['content-length'], 10)
+                    total: parseInt(response.headers[ 'content-length' ], 10)
                 });
 
                 response.on('data', chunk => bar.tick(chunk.length));
@@ -273,10 +273,10 @@ let options = {}
 
 process.argv.slice(2)
     .forEach(item => {
-        options[item.replace('--', '')] = true
+        options[ item.replace('--', '') ] = true
     })
 
-if (options['install']) {
+if (options[ 'install' ]) {
     new Installer()
         .setup(process.platform)
         .then(() => {
