@@ -2,6 +2,7 @@ export declare const VERSION = "1.0.3";
 export declare class Installer {
     private win32;
     private darwin;
+    private linux;
     private platform;
     private options;
     constructor(options?: {});

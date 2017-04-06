@@ -32,6 +32,19 @@ export class Installer {
         copyTo: path.join('bin', 'HandbrakeCLI')
     }
 
+    private linux = '\n\n\
+        Linux users\n\
+        ============\n\
+        handbrake-cli must be installed separately as the root user.\n\
+        Ubuntu users can do this using the following commands:\n\
+        \n\
+        add-apt-repository --yes ppa:stebbins/handbrake-releases\n\
+        apt-get update -qq\n\
+        apt-get install -qq handbrake-cli\n\
+        \n\
+        For all issues regarding installation of HandbrakeCLI on Linux, consult the Handbrake website:\n\
+        http://handbrake.fr\n'
+
     private platform: string;
     private options = {
         deleteInstallationArchive: true
@@ -48,7 +61,7 @@ export class Installer {
         if (platform === 'linux') {
             return new Promise(resolve => {
                 exec('npm run install:ubuntu', error => {
-                    if (error) throw error
+                    if (error) console.log(this.linux)
                     resolve(HandbrakeCLIPath)
                 })
             })
