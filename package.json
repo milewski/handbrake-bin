@@ -1,6 +1,6 @@
 {
   "name": "handbrake-bin",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "'HandBrake' wrapper that makes it seamlessly available as a local dependency",
   "author": "Rafael @Milewski",
   "license": "MIT",
@@ -13,10 +13,6 @@
     "url": "git+https://github.com/Milewski/handbrake-bin.git"
   },
   "main": "source/HandBrake.js",
-  "types": [
-    "declarations/source/HandBrake.d.ts",
-    "declarations/source/Installer.d.ts"
-  ],
   "keywords": [
     "handbrake",
     "encode",
@@ -30,9 +26,15 @@
     "vp8",
     "mp3"
   ],
+  "types": [
+    "declarations/source/HandBrake.d.ts",
+    "declarations/source/Installer.d.ts"
+  ],
   "files": [
     "source/*.js",
-    "source/install-ubuntu.sh"
+    "source/install-ubuntu.sh",
+    "declarations/source/HandBrake.d.ts",
+    "declarations/source/Installer.d.ts"
   ],
   "scripts": {
     "postinstall": "npm run build && node source/Installer.js install",
