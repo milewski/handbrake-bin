@@ -16,4 +16,3 @@ before_install:
   - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then sudo add-apt-repository --yes ppa:stebbins/handbrake-releases; fi"
   - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then sudo apt-get update -qq; fi"
   - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then sudo apt-get install -qq handbrake-cli; fi"
-  - npm run build
