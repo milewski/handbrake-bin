@@ -1,14 +1,22 @@
 {
   "name": "handbrake-bin",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "'HandBrake' wrapper that makes it seamlessly available as a local dependency",
   "author": "Rafael @Milewski",
   "license": "MIT",
+  "homepage": "https://github.com/Milewski/handbrake-bin",
+  "bugs": {
+    "url": "https://github.com/Milewski/handbrake-bin/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Milewski/handbrake-bin.git"
   },
   "main": "source/HandBrake.js",
+  "types": [
+    "declarations/source/HandBrake.d.ts",
+    "declarations/source/Installer.d.ts"
+  ],
   "keywords": [
     "handbrake",
     "encode",
@@ -24,7 +32,7 @@
   ],
   "files": [
     "source/*.js",
-    "declarations/source/**/*.d.ts"
+    "source/install-ubuntu.sh"
   ],
   "scripts": {
     "postinstall": "npm run build && node source/Installer.js install",
@@ -55,9 +63,5 @@
     "glob": "^7.1.1",
     "mocha": "^3.2.0",
     "typescript": "^2.2.2"
-  },
-  "bugs": {
-    "url": "https://github.com/Milewski/handbrake-bin/issues"
-  },
-  "homepage": "https://github.com/Milewski/handbrake-bin"
+  }
 }

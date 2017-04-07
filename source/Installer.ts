@@ -11,7 +11,7 @@ import * as download from "download";
 import * as Progress from "progress";
 import * as AppRoot from 'app-root-path';
 
-import { InstallationInterface } from "./insterfaces/InstallationInterface";
+import { InstallationInterface } from "./interfaces/InstallationInterface";
 import { HandbrakeCLIPath } from "./HandBrake";
 
 export const VERSION = '1.0.3';
