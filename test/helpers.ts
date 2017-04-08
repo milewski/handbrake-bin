@@ -4,7 +4,7 @@ import { HandbrakeCLIPath, path } from "../source/HandBrake";
 
 export function cleanUp() {
     try {
-        glob.sync(`*.{dmg,zip,exe}`, { absolute: true })
+        glob.sync('*.{dmg,zip,exe}', { absolute: true })
             .concat([HandbrakeCLIPath])
             .forEach(file => fs.unlinkSync(file))
     } catch (e) {
