@@ -33,7 +33,7 @@ describe('handbrake:shared', () => {
                     this.skip()
 
                 return new Promise((resolve, reject) => {
-                    fs.access(cli, fs.constants.R_OK | fs.constants.W_OK, error => {
+                    fs.access(cli, (fs.constants || fs)['R_OK'] | (fs.constants || fs)['W_OK'], error => {
                         if (error) reject(error)
                         resolve()
                     });
