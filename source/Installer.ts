@@ -67,7 +67,7 @@ export class Installer {
             return this.installLinux();
         }
 
-        const installation = this[ platform ];
+        const installation = this[platform];
 
         if (fs.existsSync(path.resolve(__dirname, '..', installation.copyTo))) {
 
@@ -100,7 +100,7 @@ export class Installer {
 
         if (!stdout.length) return false;
 
-        let [ currentVersion ] = /[\d.]+/.exec(stdout);
+        let [currentVersion] = /[\d.]+/.exec(stdout);
 
         if (version.gte(currentVersion, VERSION)) {
             console.log('You already have the latest HandbrakeCLI installed')
@@ -113,7 +113,7 @@ export class Installer {
 
     public deleteInstallationArchive() {
         return new Promise((resolve, reject) => {
-            fs.unlink(this[ this.platform ].archive, error => {
+            fs.unlink(this[this.platform].archive, error => {
                 if (error) reject(error)
                 resolve()
             })
@@ -210,8 +210,8 @@ export class Installer {
 
                     if (match) {
 
-                        let devicePath = match[ 1 ],
-                            mountPath = match[ 2 ]
+                        let devicePath = match[1],
+                            mountPath = match[2]
 
                         copyFrom = path.join(mountPath, copyFrom);
 
@@ -251,7 +251,7 @@ export class Installer {
             if (fs.existsSync(archive) || fs.existsSync(to)) {
                 console.log('binary was found locally, using it instead');
                 let action = this.options.deleteInstallationArchive ? 'move' : 'copy';
-                return fs[ action ](archive, base, accept);
+                return fs[action](archive, base, accept);
             }
 
             download(from).on('response', response => {
@@ -260,7 +260,7 @@ export class Installer {
                     complete: '=',
                     incomplete: '.',
                     width: 30,
-                    total: parseInt(response.headers[ 'content-length' ], 10)
+                    total: parseInt(response.headers['content-length'], 10)
                 });
 
                 response.on('data', chunk => bar.tick(chunk.length));
@@ -277,10 +277,10 @@ let options = {}
 
 process.argv.slice(2)
     .forEach(item => {
-        options[ item.replace('--', '') ] = true
+        options[item.replace('--', '')] = true
     })
 
-if (options[ 'install' ]) {
+if (options['install']) {
     new Installer()
         .setup(process.platform)
         .then(() => {
