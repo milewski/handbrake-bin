@@ -44,7 +44,7 @@ describe('handbrake:shared', () => {
     });
 
     it('should have the right version number', done => {
-        console.log(HandbrakeCLIPath)
+
         execFile(HandbrakeCLIPath, ['--version'], (error, stdout) => {
             expect(new RegExp(`HandBrake ${VERSION}`).test(stdout)).to.be(true)
             done()

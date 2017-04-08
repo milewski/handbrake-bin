@@ -1,9 +1,12 @@
 import * as fs from "fs";
-import { HandbrakeCLIPath } from "../source/HandBrake";
+import * as glob from "glob";
+import { HandbrakeCLIPath, path } from "../source/HandBrake";
 
 export function cleanUp() {
     try {
-        fs.unlinkSync(HandbrakeCLIPath)
+        glob.sync(`*.{dmg,zip,exe}`, { absolute: true })
+            .concat([HandbrakeCLIPath])
+            .forEach(file => fs.unlinkSync(file))
     } catch (e) {
         // do nothing
     }
