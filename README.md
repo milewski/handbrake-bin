@@ -29,7 +29,7 @@ execFile(handBrake, ['--input', 'input.mkv', '--output', 'output.mp4'], err => {
 });
 ```
 Or you could pull [```object-to-spawn-args```](https://www.npmjs.com/package/object-to-spawn-args) and use like this:
-```
+```js
 import { HandbrakeCLIPath } from 'handbrake-bin';
 import toSpawnArgs from 'object-to-spawn-args';
 
