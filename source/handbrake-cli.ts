@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { spawn } from "child_process";
-import { HandbrakeCLIPath } from "./HandBrake";
+import { spawn } from 'child_process';
+import { HandbrakeCLIPath } from './HandBrake';
 
 const input = process.argv.slice(2);
 
