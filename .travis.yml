@@ -1,7 +1,9 @@
 language: node_js
+
 os:
   - "linux"
   - "osx"
+
 node_js:
   - "node"
   - "7"
@@ -13,6 +15,7 @@ sudo: required
 dist: xenial
 
 before_install:
+  - npm install typescript -g && tsc
   - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then sudo add-apt-repository --yes ppa:stebbins/handbrake-releases; fi"
   - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then sudo apt-get update -qq; fi"
   - "if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]; then sudo apt-get install -qq handbrake-cli; fi"
