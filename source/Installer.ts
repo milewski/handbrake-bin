@@ -9,13 +9,13 @@ import * as rimraf from "rimraf";
 import * as version from "semver";
 import * as download from "download";
 import * as Progress from "progress";
-import * as AppRoot from 'app-root-path';
+import * as AppRoot from "app-root-path";
 
 import { InstallationInterface } from "./interfaces/InstallationInterface";
 import { HandbrakeCLIPath } from "./HandBrake";
 
-export const VERSION = '1.0.3';
-const DOWNLOAD_PATH = 'https://download.handbrake.fr/releases/%s/HandBrakeCLI-%s%s';
+export const VERSION = (process.platform === 'linux') ? '1.0.4' : '1.0.7';
+export const DOWNLOAD_PATH = 'https://download.handbrake.fr/releases/%s/HandBrakeCLI-%s%s';
 
 export class Installer {
 
@@ -132,24 +132,21 @@ export class Installer {
                     })
             }
 
-        return this.exec('which HandBrakeCLI').then(result => {
+        if (!HandbrakeCLIPath) {
+            return install()
+        }
 
-            if (!result.length) {
+        return this
+            .exec(`${HandbrakeCLIPath} --version`)
+            .then(result => {
+
+                if (this.checkVersion(result))
+                    return HandbrakeCLIPath
+
                 return install()
-            }
 
-            return this
-                .exec(`${HandbrakeCLIPath} --version`)
-                .then(result => {
+            })
 
-                    if (this.checkVersion(result))
-                        return HandbrakeCLIPath
-
-                    return install()
-
-                })
-
-        }, () => install())
     }
 
     private install(installation: InstallationInterface) {

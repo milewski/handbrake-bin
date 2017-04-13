@@ -1,7 +1,7 @@
 {
   "name": "handbrake-bin",
-  "version": "1.0.10",
-  "description": "'HandBrake' wrapper that makes it seamlessly available as a local dependency",
+  "version": "1.1.2",
+  "description": "HandBrake wrapper that makes it seamlessly available as a local dependency",
   "author": "Rafael @Milewski",
   "license": "MIT",
   "homepage": "https://github.com/Milewski/handbrake-bin",
@@ -42,7 +42,7 @@
     "prepublish": "npm run build && npm test",
     "build": "tsc",
     "pretest": "npm run build",
-    "test": "node test/test.js"
+    "test": "mocha --no-timeouts"
   },
   "bin": {
     "handbrake": "source/handbrake-cli.js"
@@ -51,7 +51,6 @@
     "app-root-path": "^2.0.1",
     "download": "^5.0.3",
     "fs-extra": "^2.1.2",
-    "object-to-spawn-args": "^1.1.0",
     "progress": "^2.0.0",
     "rimraf": "^2.5.4",
     "semver": "^5.3.0",
