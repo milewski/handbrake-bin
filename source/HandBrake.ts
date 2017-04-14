@@ -1,6 +1,6 @@
-import { join } from "path";
-import { Installer } from "./Installer";
-import { execSync } from "child_process";
+import { join } from 'path';
+import { Installer } from './Installer';
+import { spawnSync } from 'child_process';
 
 let path: string;
 
@@ -12,7 +12,7 @@ switch (process.platform) {
         path = join(__dirname, '..', 'bin', 'HandbrakeCLI.exe')
         break
     case 'linux':
-        path = execSync('which HandbrakeCLI', { encoding: 'utf8' })
+        path = spawnSync('which', ['HandBrakeCLI']).stdout.toString().trim()
         break
 }
 
