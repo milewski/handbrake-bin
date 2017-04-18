@@ -1,9 +1,9 @@
 # handbrake-bin
 
-[![Build Status](https://travis-ci.org/Milewski/handbrake-bin.svg?branch=master)](https://travis-ci.org/Milewski/handbrake-bin)
+[![Build Status](https://travis-ci.org/milewski/handbrake-bin.svg?branch=master)](https://travis-ci.org/milewski/handbrake-bin)
 [![npm version](https://badge.fury.io/js/handbrake-bin.svg)](https://badge.fury.io/js/handbrake-bin)
 [![npm downloads](https://img.shields.io/npm/dm/handbrake-bin.svg)](https://www.npmjs.com/package/handbrake-bin)
-[![dependencies](https://david-dm.org/Milewski/handbrake-bin.svg)](https://www.npmjs.com/package/handbrake-bin)
+[![dependencies](https://david-dm.org/milewski/handbrake-bin.svg)](https://www.npmjs.com/package/handbrake-bin)
 [![Join the chat at https://gitter.im/handbrake-bin/Lobby](https://badges.gitter.im/handbrake-bin/Lobby.svg)](https://gitter.im/handbrake-bin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs. More at [https://handbrake.fr/](https://handbrake.fr/)

@@ -2,15 +2,19 @@
   "name": "handbrake-bin",
   "version": "1.1.2",
   "description": "HandBrake wrapper that makes it seamlessly available as a local dependency",
-  "author": "Rafael @Milewski",
+  "author": {
+    "name": "Rafael Milewski",
+    "email": "rafael.milewski@gmail.com",
+    "url": "https://github.com/milewski"
+  },
   "license": "MIT",
-  "homepage": "https://github.com/Milewski/handbrake-bin",
+  "homepage": "https://github.com/milewski/handbrake-bin",
   "bugs": {
-    "url": "https://github.com/Milewski/handbrake-bin/issues"
+    "url": "https://github.com/milewski/handbrake-bin/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Milewski/handbrake-bin.git"
+    "url": "git+https://github.com/milewski/handbrake-bin.git"
   },
   "main": "source/HandBrake.js",
   "keywords": [
