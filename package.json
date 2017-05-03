@@ -1,6 +1,6 @@
 {
   "name": "handbrake-bin",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "HandBrake wrapper that makes it seamlessly available as a local dependency",
   "author": {
     "name": "Rafael Milewski",
@@ -53,20 +53,20 @@
   },
   "dependencies": {
     "app-root-path": "^2.0.1",
-    "download": "^5.0.3",
+    "download": "^6.0.0",
     "fs-extra": "^2.1.2",
     "progress": "^2.0.0",
     "rimraf": "^2.5.4",
     "semver": "^5.3.0",
-    "unzip": "^0.1"
+    "unzip": "^0.1.11"
   },
   "devDependencies": {
-    "@types/fs-extra": "^2.0.0",
-    "@types/mocha": "^2.2.40",
-    "@types/node": "^7.0.12",
+    "@types/fs-extra": "^2.1.0",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^7.0.15",
     "expect.js": "^0.3.1",
     "glob": "^7.1.1",
-    "mocha": "^3.2.0",
-    "typescript": "^2.2.2"
+    "mocha": "^3.3.0",
+    "typescript": "^2.3.2"
   }
 }
