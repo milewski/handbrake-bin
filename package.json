@@ -1,6 +1,6 @@
 {
   "name": "handbrake-bin",
-  "version": "1.1.3",
+  "version": "0.0.0-development",
   "description": "HandBrake wrapper that makes it seamlessly available as a local dependency",
   "author": {
     "name": "Rafael Milewski",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/milewski/handbrake-bin.git"
+    "url": "https://github.com/milewski/handbrake-bin.git"
   },
   "main": "source/HandBrake.js",
   "keywords": [
@@ -40,33 +40,47 @@
     "declarations/source/HandBrake.d.ts",
     "declarations/source/Installer.d.ts"
   ],
+  "bin": {
+    "handbrake": "source/handbrake-cli.js"
+  },
   "scripts": {
+    "commit": "git-cz",
+    "precommit": "npm run prettier && npm run test",
+    "prettier": "prettier \"*/**/*.ts\" --config .prettierrc --ignore-path ./.prettierignore --write && git add . && git status",
     "postinstall": "node source/Installer.js install",
     "install:ubuntu": "source/install-ubuntu.sh",
     "prepublish": "npm run build && npm test",
     "build": "tsc",
     "pretest": "npm run build",
-    "test": "mocha --no-timeouts"
+    "test": "mocha --no-timeouts",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
-  "bin": {
-    "handbrake": "source/handbrake-cli.js"
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "app-root-path": "^2.0.1",
-    "download": "^6.0.0",
-    "fs-extra": "^2.1.2",
+    "download": "^6.2.5",
+    "fs-extra": "^5.0.0",
     "progress": "^2.0.0",
-    "rimraf": "^2.5.4",
-    "semver": "^5.3.0",
+    "rimraf": "^2.6.2",
+    "semver": "^5.4.1",
     "unzip": "^0.1.11"
   },
   "devDependencies": {
-    "@types/fs-extra": "^2.1.0",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.15",
+    "@types/fs-extra": "^5.0.0",
+    "@types/mocha": "^2.2.45",
+    "@types/node": "^8.5.2",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
     "expect.js": "^0.3.1",
-    "glob": "^7.1.1",
-    "mocha": "^3.3.0",
-    "typescript": "^2.3.2"
+    "glob": "^7.1.2",
+    "husky": "^0.14.3",
+    "mocha": "^4.1.0",
+    "prettier": "^1.9.2",
+    "semantic-release": "^11.0.2",
+    "typescript": "^2.6.2"
   }
 }

@@ -1,8 +1,8 @@
-import { join } from 'path';
-import { Installer } from './Installer';
-import { spawnSync } from 'child_process';
+import { spawnSync } from 'child_process'
+import { join } from 'path'
+import { Installer } from './Installer'
 
-let path: string;
+let path: string
 
 switch (process.platform) {
     case 'darwin':
@@ -12,13 +12,16 @@ switch (process.platform) {
         path = join(__dirname, '..', 'bin', 'HandbrakeCLI.exe')
         break
     case 'linux':
-        path = spawnSync('which', ['HandBrakeCLI']).stdout.toString().trim()
+        path = spawnSync('which', ['HandBrakeCLI'])
+            .stdout.toString()
+            .trim()
         break
 }
 
 export default path
 export { path }
 export const HandbrakeCLIPath = path
+
 export function install() {
-    return new Installer().setup(process.platform);
+    return new Installer().setup(process.platform)
 }

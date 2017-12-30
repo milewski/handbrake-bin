@@ -1,8 +1,15 @@
-language: "node_js"
+language: node_js
 
 os:
   - "linux"
   - "osx"
+
+cache:
+  directories:
+    - node_modules
+
+notifications:
+  email: false
 
 node_js:
   - "node"
@@ -23,3 +30,13 @@ before_install:
   - "if [ $TRAVIS_OS_NAME == 'linux' ]; then sudo apt-get update -qq; fi"
   - "if [ $TRAVIS_OS_NAME == 'linux' ]; then sudo apt-get install -qq handbrake-cli; fi"
   - "if [ $TRAVIS_OS_NAME == 'linux' ]; then sudo chmod 777 /usr/bin/HandBrakeCLI; fi"
+
+before_script:
+  - npm prune
+
+after_success:
+  - npm run semantic-release
+
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

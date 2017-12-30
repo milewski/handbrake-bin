@@ -5,6 +5,7 @@
     "sourceMap": true,
     "declaration": true,
     "declarationDir": "declarations",
+    "newLine": "LF",
     "lib": [
       "es2015",
       "es2015.promise"

@@ -4,7 +4,9 @@
 [![npm version](https://badge.fury.io/js/handbrake-bin.svg)](https://badge.fury.io/js/handbrake-bin)
 [![npm downloads](https://img.shields.io/npm/dm/handbrake-bin.svg)](https://www.npmjs.com/package/handbrake-bin)
 [![dependencies](https://david-dm.org/milewski/handbrake-bin.svg)](https://www.npmjs.com/package/handbrake-bin)
-[![Join the chat at https://gitter.im/handbrake-bin/Lobby](https://badges.gitter.im/handbrake-bin/Lobby.svg)](https://gitter.im/handbrake-bin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 > HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs. More at [https://handbrake.fr/](https://handbrake.fr/)
 
@@ -58,4 +60,4 @@ All the credits goes to [https://github.com/HandBrake/HandBrake](https://github.
 
 ## License 
 
-[MIT](LICENSE)
+[MIT](LICENSE) © [Rafael Milewski](https://github.com/milewski)
