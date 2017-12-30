@@ -8,9 +8,7 @@ import { Installer, VERSION } from '../source/Installer'
 
 export function cleanUp() {
     try {
-        glob
-            .sync('*.{dmg,zip,exe}', { absolute: true })
-            .forEach(file => fs.unlinkSync(file))
+        glob.sync('*.{dmg,zip,exe}', { absolute: true }).forEach(file => fs.unlinkSync(file))
     } catch {
         // do nothing
     }
@@ -36,14 +34,10 @@ describe('handbrake', () => {
     it('should have the right file permission', function() {
         return installer.setup(process.platform).then(cli => {
             return new Promise((resolve, reject) => {
-                fs.access(
-                    cli,
-                    (fs.constants || fs)['R_OK'] | (fs.constants || fs)['W_OK'],
-                    error => {
-                        if (error) reject(error)
-                        resolve()
-                    }
-                )
+                fs.access(cli, (fs.constants || fs)['R_OK'] | (fs.constants || fs)['W_OK'], error => {
+                    if (error) reject(error)
+                    resolve()
+                })
             })
         })
     })
@@ -59,15 +53,9 @@ describe('handbrake', () => {
         const { platform } = process
 
         return installer.setup(platform).then(cli => {
-            if (platform === 'win32')
-                expect(cli).to.be(
-                    path.resolve(__dirname, '..', 'bin/HandbrakeCLI.exe')
-                )
+            if (platform === 'win32') expect(cli).to.be(path.resolve(__dirname, '..', 'bin/HandbrakeCLI.exe'))
 
-            if (platform === 'darwin')
-                expect(cli).to.be(
-                    path.resolve(__dirname, '..', 'bin/HandbrakeCLI')
-                )
+            if (platform === 'darwin') expect(cli).to.be(path.resolve(__dirname, '..', 'bin/HandbrakeCLI'))
 
             if (platform === 'linux') expect(cli).to.match(/HandBrakeCLI/)
         })

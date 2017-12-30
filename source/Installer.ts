@@ -15,8 +15,7 @@ import { HandbrakeCLIPath } from './HandBrake'
 import { InstallationInterface } from './interfaces/InstallationInterface'
 
 export const VERSION = process.platform === 'linux' ? '1.0.4' : '1.0.7'
-export const DOWNLOAD_PATH =
-    'https://download.handbrake.fr/releases/%s/HandBrakeCLI-%s%s'
+export const DOWNLOAD_PATH = 'https://download.handbrake.fr/releases/%s/HandBrakeCLI-%s%s'
 
 export class Installer {
     private win32: InstallationInterface = {
@@ -69,17 +68,13 @@ export class Installer {
         const installation = this[platform]
 
         if (fs.existsSync(path.resolve(__dirname, '..', installation.copyTo))) {
-            return this.exec(`${installation.copyTo} --version`).then(
-                result => {
-                    if (this.checkVersion(result)) {
-                        return HandbrakeCLIPath
-                    }
-
-                    return this.install(installation).then(
-                        () => HandbrakeCLIPath
-                    )
+            return this.exec(`${installation.copyTo} --version`).then(result => {
+                if (this.checkVersion(result)) {
+                    return HandbrakeCLIPath
                 }
-            )
+
+                return this.install(installation).then(() => HandbrakeCLIPath)
+            })
         }
 
         return this.install(installation).then(() => HandbrakeCLIPath)
@@ -100,11 +95,7 @@ export class Installer {
         let [currentVersion] = /[\d.]+/.exec(stdout)
 
         if (version.gte(currentVersion, VERSION)) {
-            return (
-                console.log(
-                    'You already have the latest HandbrakeCLI installed'
-                ) || true
-            )
+            return console.log('You already have the latest HandbrakeCLI installed') || true
         }
 
         return false
@@ -122,8 +113,7 @@ export class Installer {
     }
 
     private installLinux(): Promise<string | void> {
-        let command =
-                'chmod +x source/install-ubuntu.sh && npm run install:ubuntu',
+        let command = 'chmod +x source/install-ubuntu.sh && npm run install:ubuntu',
             install = () => {
                 return this.exec(command)
                     .then(() => HandbrakeCLIPath)
@@ -144,16 +134,13 @@ export class Installer {
     }
 
     private install(installation: InstallationInterface) {
-        return this.downloadFile(installation.url, installation.archive).then(
-            () => {
-                fs.ensureDirSync('bin')
+        return this.downloadFile(installation.url, installation.archive).then(() => {
+            fs.ensureDirSync('bin')
 
-                return this.extractFile(installation).then(() => {
-                    if (this.options.deleteInstallationArchive)
-                        return this.deleteInstallationArchive()
-                })
-            }
-        )
+            return this.extractFile(installation).then(() => {
+                if (this.options.deleteInstallationArchive) return this.deleteInstallationArchive()
+            })
+        })
     }
 
     private extractFile({ archive, copyFrom, copyTo }) {
@@ -183,9 +170,7 @@ export class Installer {
                 exec(`hdiutil attach ${archive}`, (err, stdout) => {
                     if (err) throw err
 
-                    const match = stdout.match(
-                        /^(\/dev\/\w+)\b.*(\/Volumes\/.*)$/m
-                    )
+                    const match = stdout.match(/^(\/dev\/\w+)\b.*(\/Volumes\/.*)$/m)
 
                     if (match) {
                         let devicePath = match[1],
@@ -199,13 +184,10 @@ export class Installer {
                             })
 
                         destination.on('close', () => {
-                            exec(
-                                `hdiutil detach ${devicePath}`,
-                                (error, stdout) => {
-                                    if (error) throw error
-                                    resolve(stdout)
-                                }
-                            )
+                            exec(`hdiutil detach ${devicePath}`, (error, stdout) => {
+                                if (error) throw error
+                                resolve(stdout)
+                            })
                         })
 
                         source.pipe(destination)
@@ -227,9 +209,7 @@ export class Installer {
 
             if (fs.existsSync(archive) || fs.existsSync(to)) {
                 console.log('binary was found locally, using it instead')
-                let action = this.options.deleteInstallationArchive
-                    ? 'move'
-                    : 'copy'
+                let action = this.options.deleteInstallationArchive ? 'move' : 'copy'
                 return fs[action](archive, base, accept)
             }
 
