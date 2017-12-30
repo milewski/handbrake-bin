@@ -53,7 +53,7 @@
     "build": "tsc",
     "pretest": "npm run build",
     "test": "mocha --no-timeouts",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release"
   },
   "config": {
     "commitizen": {
